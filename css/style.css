@@ -1296,7 +1296,7 @@ footer li a {
 footer .siteinfo {
     float: left;
     width: 410px;
-    margin-left: 5%;
+    margin-left: %;
 }
 
 footer .siteinfo pre {
@@ -1436,22 +1436,27 @@ footer .siteinfo pre {
         flex-direction: column;
         width: 70%;
         height: auto;
-    }
+        }
 
     /*    -------slide start ----*/
     .home__slider {
         position: relative;
         width: 100%;
         margin-left: 0;
-
-    }
-
+        margin-right: 0;
+          }
+    .home__slider img{
+        width: 100%;
+        max-width: 100%;
+        margin-left:  5%;
+        background-size: cover;
+           }
     .slide-logo p {
         width: 29%;
         height: auto;
         position: absolute;
         top: 5%;
-        left: 2%;
+        left: 5%;
         color: #fff;
         font-size: 1em;
         text-align: center;
@@ -1742,8 +1747,7 @@ footer .siteinfo pre {
 
     .slider {
         max-width: 19vw;
-        height: 19vh;
-        /*    margin: 0px 5%;*/
+        height: 30vh;
         position: relative;
         top: 5%;
         left: -9%;
@@ -1967,7 +1971,7 @@ footer .siteinfo pre {
 
     .slider1 {
         max-width: 19vw;
-        height: 19vh;
+        height: 30vh;
         /*    margin: 0px 5%;*/
         position: relative;
         top: 5%;
@@ -2180,7 +2184,7 @@ footer .siteinfo pre {
 
     .slider2 {
         max-width: 19vw;
-        height: 19vh;
+        height: 30vh;
         /*    margin: 0px 5%;*/
         position: relative;
         top: 5%;
@@ -2594,7 +2598,7 @@ footer .siteinfo pre {
     }
 
     .header .header_inner .logo {
-        margin-left: 20%;
+        margin-left: 30%;
         padding-top: 10px;
         width: 120px;
         height: auto;
@@ -2603,7 +2607,7 @@ footer .siteinfo pre {
     .header .header_inner .gnb_wrap .mobile_tab {
         display: block;
         position: absolute;
-        right: 10%;
+        right: 30%;
         top: 100%;
         width: 25px;
     }
@@ -3825,7 +3829,7 @@ footer .siteinfo pre {
 /*-------320  mediaquery  start-----*/
 
 
-@media screen and (max-width:320px) {
+@media screen and (max-width:360px) {
 
 
     .header {
@@ -3924,12 +3928,16 @@ footer .siteinfo pre {
     /*    -------slide start ----*/
     .home__slider {
         position: relative;
-        width: 100%;
+        width: 95%;
         margin-left: 2.5%;
-        margin-right: 2.5%;
+        margin-right:2.5%;
         background-size: cover;
+        }
+    .home__slider img{
+        margin-left: -5%;
+        max-width: 100%;
+        border: 1px solid #000;
     }
-
     .slide-logo p {
         width: 75%;
         height: auto;
@@ -5008,10 +5016,10 @@ footer .siteinfo pre {
     /*-----------footer-------------*/
     footer {
         flex: 1;
-        padding-top: 20px;
-        padding-bottom: 20px;
+        padding-top: 0px;
+        padding-bottom: 0px;
         width: 100%;
-        height: 100px;
+        height: auto;
         margin-top: 2%;
         background-color: #fff;
     }
@@ -5029,17 +5037,12 @@ footer .siteinfo pre {
     }
 
     footer ul {
-        margin-left: 0;
-        text-align: center;
-        padding: 0;
-        width: 100%;
-        list-style: none;
-        line-height: 1.5rem;
+       display: none;
     }
 
     footer li {
 
-        margin-left: 30%;
+       display: none;
     }
 
     footer ul:after {
@@ -5049,19 +5052,19 @@ footer .siteinfo pre {
     }
 
     footer li a {
-        padding-top: 0;
-        margin-right: 20px;
-        display: block;
-        text-decoration: none;
-        color: #666;
-        font-size: 10px;
+        display: none;
     }
 
     footer .siteinfo {
-        display: none;
+        float: left;
+        width: auto;
+        margin-left: 15%;
+        height: auto;
     }
 
     footer .siteinfo pre {
-        display: none;
-    }
+        color: #666;
+        font-size: .4rem;
+        line-height: 1.9em;
+       }
 }
