@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+        <style>
+    /* General Demo Style */
+
+*,
+*:after,
+*:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+ #container{
+     width: 80%;
+     height: auto;
+     margin: 0 auto;
+     margin-top: 5%;
+     border-radius: 10px;
+    box-shadow: 1px 1px 3px #ccc, 3px 3px 5px #333;
+            }
+
+/* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+
+.clearfix:before,
+.clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+.clearfix {
+	*zoom: 1;
+}
+
+
+.demo-2 body {
+	background: url(https://tympanus.net/Development/3DBookShowcase/images/wood.jpg);
+}
+
+
+a {
+	color: #555;
+	text-decoration: none;
+}
+
+.view-box {
+	width: 100%;
+	position: relative;
+   }
+
+.main,
+.view-box > header {
+	width: 100%;
+	max-width: 1060px;
+	margin: 0 auto;
+	position: relative;
+	padding: 50px 30px 50px 30px;
+   }
+
+.view-box > header {
+	padding: 30px 30px 40px 30px;
+}
+
+.view-box > header h1 {
+	font-size: 34px;
+	line-height: 38px;
+	margin: 0;
+	font-weight: 700;
+	color: #333;
+	float: left;
+}
+
+
+/* Header Style */
+
+.codrops-top {
+	line-height: 24px;
+	font-size: 11px;
+	background: #fff;
+	background: rgba(255, 255, 255, 0.5);
+	text-transform: uppercase;
+	z-index: 9999;
+	position: relative;
+	box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.2);
+}
+
+.codrops-top a {
+	padding: 0px 10px;
+	letter-spacing: 1px;
+	color: #333;
+	display: inline-block;
+}
+
+.codrops-top a:hover {
+	background: rgba(255, 255, 255, 0.8);
+	color: #000;
+}
+
+.codrops-top span.right {
+	float: right;
+}
+
+.codrops-top span.right a {
+	float: left;
+	display: block;
+}
+
+
+/* Demo Buttons Style */
+
+.codrops-demos {
+	float: right;
+}
+
+.codrops-demos a {
+	display: inline-block;
+	margin: 10px;
+	color: #666;
+	font-weight: 700;
+	line-height: 30px;
+	border-bottom: 4px solid transparent;
+}
+
+.codrops-demos a:hover {
+	color: #000;
+	border-color: #000;
+}
+
+.codrops-demos a.current-demo,
+.codrops-demos a.current-demo:hover {
+	color: #aaa;
+	border-color: #aaa;
+}
+
+.support-note {
+	color: #d7823e;
+	font-size: 16px;
+	display: block;
+	font-weight: bold;
+	text-align: center;
+	padding: 5px 0;
+	text-align: left;
+	clear: both;
+}
+
+.bookshelf {
+	width: 100%;
+	height: 63px;
+	z-index: -1;
+	margin-top: -25px;
+	background: transparent url(https://tympanus.net/Development/3DBookShowcase/images/shelf.png) no-repeat center center;
+	position: relative;
+}
+
+
+/*book showcase*/
+
+.bk-list {
+	list-style: none;
+	position: relative;
+}
+
+.bk-list li {
+	position: relative;
+	width: 300px;
+	float: left;
+	z-index: 1;
+	margin: 0px 50px 40px 0;
+	-webkit-perspective: 1800px;
+	perspective: 1800px;
+}
+
+.bk-list li:last-child {
+	margin-right: 0;
+}
+
+.bk-info {
+	position: relative;
+	margin-top: 0px;
+    margin-left: 120%;
+    width: 700px;
+    height: auto;
+  }
+
+.bk-info h3 {
+	padding: 25px 0 10px;
+	margin-bottom: 20px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+	font-size: 26px;
+}
+
+.bk-info h3 span:first-child {
+	font-size: 14px;
+	font-weight: 400;
+	text-transform: uppercase;
+	padding-bottom: 5px;
+	display: block;
+	color: #777;
+}
+
+.bk-info p {
+	line-height: 24px;
+	color: #444;
+	min-height: 160px;
+}
+
+.bk-info button {
+	background: #FC756F;
+	border: none;
+	color: #fff;
+	display: inline-block;
+	padding: 3px 15px;
+	font-weight: 700;
+	font-size: 14px;
+	text-transform: uppercase;
+	cursor: pointer;
+	margin-right: 4px;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+.bk-info button.bk-active,
+.bk-info button:active {
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.no-touch .bk-info button:hover,
+.bk-info button.bk-active {
+	background: #d0544e;
+}
+
+.bk-list li .bk-book {
+	position: absolute;
+	width: 100%;
+	height: 400px;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-webkit-transition: -webkit-transform .5s;
+	transition: transform .5s;
+}
+
+.bk-list li .bk-book.bk-bookdefault:hover {
+	-webkit-transform: rotate3d(0, 1, 0, 35deg);
+	transform: rotate3d(0, 1, 0, 35deg);
+}
+
+.bk-list li .bk-book > div,
+.bk-list li .bk-front > div {
+	display: block;
+	position: absolute;
+}
+
+.bk-list li .bk-front {
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-webkit-transform-origin: 0% 50%;
+	transform-origin: 0% 50%;
+	-webkit-transition: -webkit-transform .5s;
+	transition: transform .5s;
+	-webkit-transform: translate3d(0, 0, 20px);
+	transform: translate3d(0, 0, 20px);
+	z-index: 10;
+}
+
+.bk-list li .bk-front > div {
+	z-index: 1;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
+.bk-list li .bk-page {
+	-webkit-transform: translate3d(0, 0, 19px);
+	transform: translate3d(0, 0, 19px);
+	display: none;
+	width: 295px;
+	height: 390px;
+	top: 5px;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	z-index: 9;
+}
+
+.bk-list li .bk-front,
+.bk-list li .bk-back,
+.bk-list li .bk-front > div {
+	width: 300px;
+	height: 400px;
+}
+
+.bk-list li .bk-left,
+.bk-list li .bk-right {
+	width: 40px;
+	left: -20px;
+ }
+
+.bk-list li .bk-top,
+.bk-list li .bk-bottom {
+	width: 295px;
+	height: 40px;
+	top: -15px;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.bk-list li .bk-back {
+	-webkit-transform: rotate3d(0, 1, 0, -180deg) translate3d(0, 0, 20px);
+	transform: rotate3d(0, 1, 0, -180deg) translate3d(0, 0, 20px);
+	box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.3);
+	border-radius: 3px 0 0 3px;
+}
+
+.bk-list li .bk-cover-back {
+	background-color: #000;
+	-webkit-transform: rotate3d(0, 1, 0, -179deg);
+	transform: rotate3d(0, 1, 0, -179deg);
+}
+
+.bk-list li .bk-right {
+	height: 390px;
+	top: 5px;
+	-webkit-transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 295px);
+	-moz-transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 295px);
+	transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 295px);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.bk-list li .bk-left {
+	height: 400px;
+	-webkit-transform: rotate3d(0, 1, 0, -90deg);
+	transform: rotate3d(0, 1, 0, -90deg);
+}
+
+.bk-list li .bk-top {
+	-webkit-transform: rotate3d(1, 0, 0, 90deg);
+	transform: rotate3d(1, 0, 0, 90deg);
+}
+
+.bk-list li .bk-bottom {
+	-webkit-transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 390px);
+	transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 390px);
+}
+
+
+/* Transform classes */
+
+.bk-list li .bk-viewinside .bk-front {
+	-webkit-transform: translate3d(0, 0, 20px) rotate3d(0, 1, 0, -160deg);
+	transform: translate3d(0, 0, 20px) rotate3d(0, 1, 0, -160deg);
+}
+
+.bk-list li .bk-book.bk-viewinside {
+	-webkit-transform: translate3d(0, 0, 150px) rotate3d(0, 1, 0, 0deg);
+	transform: translate3d(0, 0, 150px) rotate3d(0, 1, 0, 0deg);
+}
+
+.bk-list li .bk-book.bk-viewback {
+	-webkit-transform: translate3d(0, 0, 0px) rotate3d(0, 1, 0, 180deg);
+	transform: translate3d(0, 0, 0px) rotate3d(0, 1, 0, 180deg);
+}
+
+
+/* Main colors and content */
+
+.bk-list li .bk-page,
+.bk-list li .bk-right,
+.bk-list li .bk-top,
+.bk-list li .bk-bottom {
+	background-color: #fff;
+}
+
+.bk-list li .bk-front > div {
+	border-radius: 0 3px 3px 0;
+	box-shadow: inset 4px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.bk-list li .bk-front:after {
+	content: '';
+	position: absolute;
+	top: 1px;
+	bottom: 1px;
+	left: -1px;
+	width: 1px;
+}
+
+.bk-list li .bk-cover:after,
+.bk-list li .bk-back:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 10px;
+	bottom: 0;
+	width: 3px;
+	background: rgba(0, 0, 0, 0.06);
+	box-shadow: 1px 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.bk-list li .bk-back:after {
+	left: auto;
+	right: 10px;
+}
+
+.bk-left h2 {
+	width: 400px;
+	height: 40px;
+	-webkit-transform-origin: 0 0;
+	-moz-transform-origin: 0 0;
+	transform-origin: 0 0;
+	-webkit-transform: rotate(90deg) translateY(-40px);
+	transform: rotate(90deg) translateY(-40px);
+}
+
+.bk-content {
+	position: absolute;
+	top: 30px;
+	left: 20px;
+	bottom: 20px;
+	right: 20px;
+	padding: 30px;
+	overflow: hidden;
+	background: #fff;
+	opacity: 0;
+	pointer-events: none;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-webkit-transition: opacity 0.3s ease-in-out;
+	transition: opacity 0.3s ease-in-out;
+	cursor: default;
+}
+
+.bk-content-current {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.bk-content p {
+	padding: 0 0 10px;
+	-webkit-font-smoothing: antialiased;
+	color: #000;
+	font-size: 13px;
+	line-height: 20px;
+	text-align: justify;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.bk-page nav {
+	display: block;
+	text-align: center;
+	margin-top: 20px;
+	position: relative;
+	z-index: 100;
+	cursor: pointer;
+}
+
+.bk-page nav span {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	color: #aaa;
+	background: #f0f0f0;
+	border-radius: 50%;
+}
+
+
+/* Individual style & artwork */
+
+
+/* Book 1 */
+
+.book-1 .bk-front > div,
+.book-1 .bk-back,
+.book-1 .bk-left,
+.book-1 .bk-front:after {
+	background-color:#fff;
+}
+
+.book-1 .bk-cover {
+	background-image: url(images/nb3.jpg);
+	background-repeat: no-repeat;
+    background-size: cover;
+   	background-position: 0px 0px;
+   }
+
+.book-1 .bk-cover h2 {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	padding: 30px;
+	background: rgba(255, 255, 255, 0.2);
+	color: #fff;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.book-1 .bk-cover h2 span:first-child,
+.book-1 .bk-left h2 span:first-child {
+	text-transform: uppercase;
+	font-weight: 400;
+	font-size: 13px;
+	padding-right: 20px;
+}
+
+.book-1 .bk-cover h2 span:first-child {
+	display: block;
+}
+
+.book-1 .bk-cover h2 span:last-child,
+.book-1 .bk-left h2 span:last-child {
+	font-family: "Big Caslon", "Book Antiqua", "Palatino Linotype", Georgia, serif;
+}
+
+.book-1 .bk-content p {
+	font-family: Georgia, Times, "Times New Roman", serif;
+}
+
+.book-1 .bk-left h2 {
+	color: #333;
+	font-size: 15px;
+	line-height: 40px;
+	padding-right: 10px;
+	text-align: right;
+}
+
+.book-1 .bk-back p {
+	color: #fff;
+	font-size: 13px;
+	padding: 40px;
+	text-align: center;
+	font-weight: 700;
+}
+
+/* Fallbacks */
+
+.no-csstransforms3d .bk-list li .bk-book > div,
+.no-csstransforms3d .bk-list li .bk-book .bk-cover-back {
+	display: inline-block;
+}
+
+.no-csstransforms3d .bk-list li .bk-book > div.bk-front {
+	display: block;
+}
+
+.no-csstransforms3d .bk-info button,
+.no-js .bk-info button {
+	display: inline-block;
+}
+
+ @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
+
+h1 {
+  color: #3e3e42;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  transform: translateZ(35px);
+}
+h3 {
+  color: #eb285d;
+  font-size: 16px;
+  margin-bottom: 6px;
+  transform: translateZ(25px);
+}
+.cards {
+    margin-left: 16%;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0px 10px 20px 20px rgba(0, 0, 0, 0.17);
+  display: inline-block;
+  padding: 30px 35px;
+  perspective: 1800px;
+  text-align: left;
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  transform: rotateX(11deg) rotateY(16.5deg);
+  min-width: 595px;
+}
+.card {
+  border-radius: 15px;
+  box-shadow: 5px 5px 20px -5px rgba(0, 0, 0, 0.6);
+  display: inline-block;
+  height: 250px;
+  overflow: hidden;
+  perspective: 1200px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: translatez(35px);
+  transition: transform 200ms ease-out;
+  width: 175px;
+  text-align: center;
+  background-size: cover;
+}
+.card:not(:last-child) {
+  margin-right: 30px;
+}
+.card__img {
+  position: relative;
+  height: 100%;
+}
+
+.card__bg {
+  bottom: -25px;
+  left: -25px;
+  position: absolute;
+  right: -50px;
+  top: -50px;
+  transform-origin: 50% 50%;
+  transform: translateZ(-50px);
+  z-index: 0;
+}
+
+.card__one .card__img {
+  top: -1%;
+  right: -1%;
+  height: 130%;
+}
+
+.card__two .card__img {
+  top: -25px;
+    left: -175px;
+    height: 130%;
+}
+
+.card__three .card__img {
+  top: -25px;
+  left: -104px;
+  height: 130%;
+}
+.card__three .card__bg {
+  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/62105/3dr_howlbg.jpg') center / cover no-repeat;
+}
+.card__text {
+  align-items: center;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 100%);
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  height: 70px;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+}
+.card__title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 0 10px;
+  margin-bottom: 3px;
+}
+.notice {
+  background: gold;
+  border-top-left-radius: 6px;
+  bottom: 0;
+  font-family: monospace;
+  font-size: 14px;
+  padding: 8px 10px;
+  position: absolute;
+  right: -20px;
+}
+
+.movi-box{
+      position: absolute;
+    top: 80%;
+    left: 60%;
+            }
+   .btn{
+         position: absolute;
+         left: 85%;
+         top: 99%;
+            }
+    </style>
+</head>
+<body>
+ <div id="container">
+  <div class="container">
+	<div class="main">
+		<ul id="bk-list" class="bk-list clearfix">
+			<li>
+				<div class="bk-book book-1 bk-bookdefault">
+					<div class="bk-front">
+						<div class="bk-cover-back"></div>
+						<div class="bk-cover">
+							<h2>
+										<span>Jane Austen</span>
+										<span>Pride and Prejudice</span>
+									</h2>
+						</div>
+					</div>
+					<div class="bk-page">
+						<div class="bk-content bk-content-current">
+							<p>Red snapper Kafue pike fangtooth humums slipmouth, salmon cutlassfish; swallower European perch mola mola sunfish, threadfin bream. Billfish hog sucker trout-perch lenok orbicular velvetfish. Delta smelt striped bass, medusafish dragon goby starry
+								flounder cuchia round whitefish northern anchovy spadefish merluccid hake cat shark Black pickerel. Pacific cod.</p>
+						</div>
+						<div class="bk-content">
+							<p>Whale catfish leatherjacket deep sea anglerfish grenadier sawfish pompano dolphinfish carp large-eye bream, squeaker amago. Sandroller; rough scad, tiger shovelnose catfish snubnose parasitic eel? Black bass soldierfish duckbill--Rattail Atlantic
+								saury Blind shark California halibut; false trevally warty angler!</p>
+						</div>
+						<div class="bk-content">
+							<p>Trahira giant wels cutlassfish snapper koi blackchin mummichog mustard eel rock bass whiff murray cod. Bigmouth buffalo ling cod giant wels, sauger pink salmon. Clingfish luderick treefish flatfish Cherubfish oldwife Indian mul gizzard shad hagfish
+								zebra danio. Butterfly ray lizardfish ponyfish muskellunge Long-finned sand diver mullet swordfish limia ghost carp filefish.</p>
+						</div>
+						<nav><span class="bk-page-prev">&lt;</span><span class="bk-page-next">&gt;</span></nav>
+					</div>
+					<div class="bk-back">
+						<p>In this nightmare vision of cats in revolt, fifteen-year-old Alex and his friends set out on a diabolical orgy of robbery, rape, torture and murder. Alex is jailed for his teenage delinquency and the State tries to reform him - but at what cost?</p>
+					</div>
+					<div class="bk-right"></div>
+					<div class="bk-left">
+						<h2>
+									<span>Jane Austen</span>
+									<span>Pride and Prejudice </span>
+								</h2>
+					</div>
+					<div class="bk-top"></div>
+					<div class="bk-bottom"></div>
+				</div>
+				<div class="bk-info">
+					<button class="bk-bookback">Flip</button>
+					<button class="bk-bookview">View inside</button>
+					<h3>
+								<span>Jane Austen</span>
+								<span>Pride and Prejudice</span>
+							</h3>
+					<p>《오만과 편견》 (Pride and Prejudice) 19세기 사실주의 문학의 시작을 알린 제인 오스틴의 대표작
+
+18세기 후반 영국 중류계급의 결혼풍속도를 다루는 작품으로, 주인공의 오만과 편견으로 생긴 서로에 대한 오해를 극복하고 결혼에 성공한다 내용이다. 여주인공 엘리자베스는 편견의 대표자로 살아가면서 겪게 되는 경험과 사유에 의해서 자신의 편견을 바로 잡게 된다. 미래 생활을 보장받기 위해 조금도 사랑하지 않는 남자와 결혼하는 친구 샬럿과 별반 조건이 다르지 않은 엘리자베스는 현실의 압박에 굴하지 않고 자신의 분별력이나 감성을 희생하지 않고도 사랑과 행복, 재산과 사회적 지위까지 얻게 된다.
+
+이 작품의 매력은 별로 예쁘지도 않은 엘리자베스가 활달한 성격과 여러 장점을 통해 상류층 다시 가문의 여주인이 된다는 신데렐라의 이야기에 있다. 또한 베넷 부부, 샬럿 루커스와 콜린스 목사, 리디아 베넷과 위컴, 캐서린 드 버그 귀부인 등에 대한 인물 묘사를 통해 당대 사회의 풍속과 인간의 보편적 삶을 웃음과 풍자로 묘사하는 것이 빼놓을 수 없는 매력이다. 당시의 극심한 빈부의 격차와 지방 지주계급들의 허영과 사치, 무능, 부도덕성을 세밀하게 해부하고 있다는 점에서 높이 평가받고 있는 작품이다.
+
+</p>
+				</div>
+			</li>
+
+		</ul>
+	</div>
+</div>
+<script>
+    var Books = (function() {
+
+	var $books = $('#bk-list > li > div.bk-book'),
+		booksCount = $books.length;
+
+	function init() {
+
+		$books.each(function() {
+
+			var $book = $(this),
+				$other = $books.not($book),
+				$parent = $book.parent(),
+				$page = $book.children('div.bk-page'),
+				$bookview = $parent.find('button.bk-bookview'),
+				$content = $page.children('div.bk-content'),
+				current = 0;
+
+			$parent.find('button.bk-bookback').on('click', function() {
+
+				$bookview.removeClass('bk-active');
+
+				if ($book.data('flip')) {
+
+					$book.data({
+						opened: false,
+						flip: false
+					}).removeClass('bk-viewback').addClass('bk-bookdefault');
+
+				} else {
+
+					$book.data({
+						opened: false,
+						flip: true
+					}).removeClass('bk-viewinside bk-bookdefault').addClass('bk-viewback');
+
+				}
+
+			});
+
+			$bookview.on('click', function() {
+
+				var $this = $(this);
+
+				$other.data('opened', false).removeClass('bk-viewinside').parent().css('z-index', 0).find('button.bk-bookview').removeClass('bk-active');
+				if (!$other.hasClass('bk-viewback')) {
+					$other.addClass('bk-bookdefault');
+				}
+
+				if ($book.data('opened')) {
+					$this.removeClass('bk-active');
+					$book.data({
+						opened: false,
+						flip: false
+					}).removeClass('bk-viewinside').addClass('bk-bookdefault');
+				} else {
+					$this.addClass('bk-active');
+					$book.data({
+						opened: true,
+						flip: false
+					}).removeClass('bk-viewback bk-bookdefault').addClass('bk-viewinside');
+					$parent.css('z-index', booksCount);
+					current = 0;
+					$content.removeClass('bk-content-current').eq(current).addClass('bk-content-current');
+				}
+
+			});
+
+			if ($content.length > 1) {
+
+				var $navPrev = $('<span class="bk-page-prev">&lt;</span>'),
+					$navNext = $('<span class="bk-page-next">&gt;</span>');
+
+				$page.append($('<nav></nav>').append($navPrev, $navNext));
+
+				$navPrev.on('click', function() {
+					if (current > 0) {
+						--current;
+						$content.removeClass('bk-content-current').eq(current).addClass('bk-content-current');
+					}
+					return false;
+				});
+
+				$navNext.on('click', function() {
+					if (current < $content.length - 1) {
+						++current;
+						$content.removeClass('bk-content-current').eq(current).addClass('bk-content-current');
+					}
+					return false;
+				});
+
+			}
+
+		});
+
+	}
+
+	return {
+		init: init
+	};
+
+})();
+
+	$(function() {
+
+	Books.init();
+
+});
+    </script>
+    <div class="cards">
+  <h3>Movies</h3>
+  <h1>Popular</h1>
+  <div class="card card__one">
+    <div class="card__bg"></div>
+    <img class="card__img" src="images/nm8.jpg" />
+    <div class="card__text">
+      <p class="card__title">Pride and Prejudice </p>
+    </div>
+  </div>
+  <div class="card card__two">
+    <div class="card__bg"></div>
+    <img class="card__img" src="images/nm9.jpg" />
+    <div class="card__text">
+      <p class="card__title">Pride and Prejudice</p>
+    </div>
+  </div>
+  <div class="card card__three">
+    <div class="card__bg"></div>
+    <img class="card__img" src="images/nm10.jpg" />
+    <div class="card__text">
+      <p class="card__title">Pride and Prejudice</p>
+    </div>
+  </div>
+</div>
+
+<script>
+    const cards = document.querySelector(".cards");
+const images = document.querySelectorAll(".card__img");
+const backgrounds = document.querySelectorAll(".card__bg");
+const range = 40;
+
+// const calcValue = (a, b) => (((a * 100) / b) * (range / 100) -(range / 2)).toFixed(1);
+const calcValue = (a, b) => (a/b*range-range/2).toFixed(1) // thanks @alice-mx
+
+let timeout;
+document.addEventListener('mousemove', ({x, y}) => {
+  if (timeout) {
+    window.cancelAnimationFrame(timeout);
+  }
+
+  timeout = window.requestAnimationFrame(() => {
+    const yValue = calcValue(y, window.innerHeight);
+    const xValue = calcValue(x, window.innerWidth);
+
+    cards.style.transform = `rotateX(${yValue}deg) rotateY(${xValue}deg)`;
+
+    [].forEach.call(images, (image) => {
+      image.style.transform = `translateX(${-xValue}px) translateY(${yValue}px)`;
+    });
+
+    [].forEach.call(backgrounds, (background) => {
+      background.style.backgroundPosition = `${xValue*.45}px ${-yValue*.45}px`;
+    })
+	})
+}, false);
+    </script>
+    <div class="movi-box">
+        <h2>오만과 편견 (2005)</h2>
+        <br>
+        <hr>
+        <br>
+        Pride & Prejudice <br>
+★★★★★ 평점8.7/10 <br>
+로맨스/멜로/드라마
+ &nbsp; &nbsp; 프랑스, 영국 <br>
+2006.03.24 개봉
+127분, 12세이상관람가<br>
+(감독) 조 라이트 <br>
+(주연) 키이라 나이틀리, 매튜 맥퍼딘
+    </div>
+      <div class="btn"><a href="index.html"><img src="images/btn.png" width="50" height="50" alt=""></a></div>
+    </div>
+</body>
+</html>
