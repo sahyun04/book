@@ -42,8 +42,8 @@ $(function(){
         }
     });
     $(".gnb a").click(function(e){
-        e.preventDefault();
-        if(status=="mobile"){
+
+        if(status=="mobile"){   e.preventDefault();
             if($(this).next(".sub").css("display")=="none"){
                 $(".gnb .sub").slideUp(300);
                 $(this).next(".sub").slideDown(300);

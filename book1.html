@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>Document</title>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <style>
+        html {
+            font-size: 62.5%;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        .main {
+            position: relative;
+            width: 96rem;
+            padding: 2.4rem;
+            margin: 0 auto;
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: #222;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        .products {
+            flex: 0 0 62%;
+            padding: 2rem 0;
+        }
+
+        .books {
+            padding-top: 3.2rem;
+            margin-top: 1.6rem;
+            box-shadow: inset 0px 1px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .book {
+            position: relative;
+            padding-bottom: 2.4rem;
+            margin-bottom: 2.4rem;
+            box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .book .book-header {
+            margin-bottom: 1.6rem;
+        }
+
+        .book .book-title {
+            font-size: 2.4rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .book .book-author em {
+            font-style: italic;
+            color: #222;
+        }
+
+        .book .book-author a {
+            color: #028482;
+            text-decoration: none;
+            transition: 200ms color ease-in-out;
+        }
+
+        .book .book-author a:hover {
+            color: #03a9a6;
+        }
+
+        .book .book-content {
+            flex: 0 0 71%;
+            font-size: 1.6rem;
+            line-height: 1.5;
+        }
+
+        .book .book-body {
+            color: #222;
+            margin-bottom: 1.6rem;
+        }
+
+        .book .book-footer {
+            display: flex;
+            justify-content: space-between;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .book .book-price {
+            font-size: 1.6rem;
+            line-height: 1;
+            font-weight: 700;
+            color: #028482;
+            padding: 1rem 1.2rem;
+            box-shadow: inset 0px 0px 0px 2px #028482;
+            border-radius: 2px 0 0 2px;
+            order: -1;
+        }
+
+        .book .thumbnail {
+            flex: 0 0 25%;
+        }
+
+        .book .thumbnail img {
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .book .thumbnail img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 1.6rem;
+        }
+
+        .book .btn:hover+.book-price {
+            transition: 200ms all ease-in-out;
+            box-shadow: inset 0px 0px 0px 2px #03a9a6;
+            color: #03a9a6;
+        }
+
+        .shopping-cart {
+            flex: 0 0 32%;
+            width: 100%;
+        }
+
+        .cart-wrapper {
+            position: sticky;
+            top: 0;
+            left: 0;
+            padding: 2rem 0;
+        }
+
+        .cart-content {
+            padding: 3.2rem 0;
+            margin: 1.6rem 0;
+            box-shadow: inset 0px 1px 0px rgba(0, 0, 0, 0.1), inset 0px -1px 0px rgba(0, 0, 0, 0.1);
+            font-size: 1.6rem;
+        }
+
+        .cart-item {
+            box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
+            padding-bottom: 1.2rem;
+            margin-bottom: 1.2rem;
+            font-size: 1.6rem;
+            font-style: italic;
+        }
+
+        .cart-item .item-title {
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .item-count {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .cart-total {
+            font-size: 1.6rem;
+            font-weight: 700;
+            padding-bottom: 1.6rem;
+        }
+
+        .button-group {
+            display: inline-block;
+            margin-left: 1.6rem;
+        }
+
+        .btn {
+            text-transform: uppercase;
+            background-color: #028482;
+            color: #fff;
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            padding: 1.2rem 1.6rem;
+            line-height: 1;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 0 2px 2px 0;
+            transition: 300ms background-color ease-in-out;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        .btn:hover {
+            background-color: #03a9a6;
+        }
+
+        .btn.inc,
+        .btn.dec,
+        .btn.trash {
+            font-size: 1.6rem;
+            line-height: 1;
+            min-width: 1.6rem;
+            padding: 0.4rem 0.8rem;
+            text-align: center;
+            font-weight: 700;
+            opacity: 0.75;
+            margin-left: 0.4rem;
+        }
+
+        .btn.trash {
+            background-color: #ff6347;
+        }
+
+        .btn.trash:hover {
+            background-color: #ff826c;
+        }
+
+        .btn:disabled,
+        .btn:disabled:hover {
+            transition: 300ms background-color ease-in-out;
+            background-color: #028482;
+            opacity: 0.4;
+        }
+
+        .fade-enter-active {
+            transition: 400ms opacity ease-in-out;
+        }
+
+        .fade-leave-active {
+            transition: 0s opacity linear;
+        }
+
+        .fade-enter,
+        .fade-leave-active {
+            opacity: 0;
+        }
+
+        [v-cloak] {
+            display: none !important;
+        }
+
+    </style>
+</head>
+
+<body>
+    <main class="main" id="app" v-cloak>
+        <section class="products">
+            <h2>Books</h2>
+
+            <ul class="books">
+                <li class="book" v-for="(book, index) in books" v-bind:key="index">
+                    <div class="thumbnail">
+                        <img :src="book.thumbnail" :alt="book.title" />
+                    </div>
+                    <div class="book-content">
+                        <header class="book-header">
+                            <h2 class="book-title">{{ book.title }}</h2>
+                            <div class="book-author">
+                                <em>by</em>
+                                <a href="#author">{{ book.author }}</a>
+                            </div>
+                        </header>
+                        <div class="book-body">{{ book.body }}</div>
+                        <footer class="book-footer">
+                            <button class="btn" v-on:click="addOrIncrement(book)">Add to cart</button>
+                            <div class="book-price">
+                                {{ book.price | currency }}
+                            </div>
+                        </footer>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <aside class="shopping-cart">
+            <div class="cart-wrapper">
+                <h2>Cart</h2>
+
+                <div class="cart-content">
+                    <transition-group name="fade" tag="ul">
+                        <li class="cart-item" v-for="item in cart" v-bind:key="item.id">
+                            <span class="item-title">
+                                {{ item.title }}
+                            </span>
+                            <span class="item-count">
+                                <span>{{ item.count }} &times; {{ item.price | currency }}</span>
+                                <div class="button-group">
+                                    <button class="btn inc" v-on:click="addOrIncrement(item)">+</button>
+                                    <button class="btn dec" :disabled="item.count <= 1" v-on:click="removeOrDecrement(item)">&minus;</button>
+                                    <button class="btn trash" v-on:click="removeAll(item)">&times;</button>
+                                </div>
+                            </span>
+                        </li>
+                    </transition-group>
+                    <transition name="fade">
+                        <div v-if="cart.length">
+                            <span class="cart-total">
+                                Total: {{ total | currency }}
+                            </span>
+                        </div>
+                    </transition>
+                    <div v-if="!cart.length">Your cart is empty.</div>
+                </div>
+            </div>
+        </aside>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                total: 0,
+                books: [{
+                    id: 1,
+                    title: "손가락 문어",
+                    author: "구세 사나에",
+                    publisher: "Leanpub",
+                    body: "나는 손가락을 빨아요. 엄마가 붕대를 감고 언니가 겨자를 발라도 소용이 없어요. 졸리면 나도 모르게 손가락이 입 안에 있는걸요. 그래서 내 왼손 엄지손가락은 부풀고 굳은살이 박여서 보기 싫게 변했어요. 꼭 문어 얼굴 같아요. ‘창피해. 이 문어 없어졌으면.’ 나는 손톱으로 문어를 꾹꾹 눌렀어요. 안 돼, 어떡해! 내가 손가락 문어를 사라지게 할 수 있을까요?",
+                    thumbnail: "images/b001.jpg",
+                    price: 12.00
+                }, {
+                    id: 2,
+                    title: "엄마가 화났다",
+                    author: "최숙희",
+                    publisher: "Manning",
+                    body: "엄마와 아이는 서로가 서로에게 세상에서 가장 소중한 존재임에도, 관계를 제대로 풀어 가지 못해 힘겨워하는 일이 많지요. 작가는 그 꼬인 매듭을 풀 계기를 만들어 보자는 뜻에서 이 그림책을 만들었습니다. 우리 엄마와 아이들의 마음을 따뜻하게 어루만져 온 그림책 작가 최숙희 특유의 다정한 글과 아름다운 그림으로요.",
+                    thumbnail: "images/b002.jpg",
+                    price: 10.00
+                }, {
+                    id: 3,
+                    title: "너는 기적이야",
+                    author: "최숙희",
+                    publisher: "Manning",
+                    body: "아이가 태어나면 엄마들은 지구의 자전과 공전으로 만들어지는 시간이 아니라 아이를 중심으로 돌아가는 새로운 시간대를 살게 됩니다. 그래서 엄마들의 아침은 날이 밝아올 때가 아니라 아이가 눈뜰 때 비로소 시작되지요. 아이가 세상에 온 뒤로 날마다 뜨던 해도 우리 아기를 보러 어둠 속에서 얼굴을 내미는 듯하고, 봄이면 늘 피던 꽃도 우리 아기를 따라 웃느라 꽃망울을 터뜨리는 듯합니다. 아이가 처음 “엄마!” 하고 부르던 날은 들판을 내달리던 사슴도 우뚝 멈춰 서서 우리 아기 목소리에 귀를 기울일 것만 같습니다. 아이가 한 고비 또 한 고비를 넘기며 성장하는 그 기적 같은 순간에 엄마가 느꼈던 감정이 고스란히 담겨 있습니다.",
+                    thumbnail: "images/b7.jpg",
+                    price: 10.00
+                }, {
+                    id: 4,
+                    title: "괜찮아",
+                    author: "최숙희",
+                    publisher: "The Pragmatic Bookshelf",
+                    body: "하얀 찔레꽃이 피었습니다. 누군가는 뾰족한 가시덤불만 보고 찔레나무를 쓸모 없는 나무라고 이야기하지만, 옛날 사람들은 찔레꽃으로 화장수를 만들어 몸을 씻고, 찔레순을 간식으로 먹기도 했답니다. 그 가시덤불 속에 수줍게 피어난 찔레꽃 향기는 또 얼마나 고운데요. 찔레꽃 옷을 입고 찾아온 아이는 자신의 부족함만 바라보며 웅크린 이들에게 가만히 속삭입니다.",
+                    thumbnail: "images/b6.jpg",
+                    price: 10.00
+                }],
+                cart: []
+            },
+            methods: {
+                getItemIndex(book) {
+                    return this.cart.findIndex(i => i.id === book.id);
+                },
+                addOrIncrement(book) {
+                    const index = this.getItemIndex(book);
+                    if (index < 0) {
+                        this.cart.push({
+                            id: book.id,
+                            price: book.price,
+                            title: book.title,
+                            count: 1
+                        });
+                    } else {
+                        this.cart[index].count += 1;
+                    }
+                    this.total += book.price;
+                },
+                removeOrDecrement(book) {
+                    const index = this.getItemIndex(book);
+                    if (index < 0) return;
+                    const currentBook = this.cart[index];
+                    this.total -= currentBook.price;
+                    if (currentBook.count <= 1) {
+                        this.cart.splice(index, 1);
+                    } else {
+                        currentBook.count -= 1;
+                    }
+                },
+                removeAll(book) {
+                    const index = this.getItemIndex(book);
+                    if (index < 0) return;
+                    const currentBook = this.cart[index];
+                    this.cart.splice(index, 1);
+                    this.total -= currentBook.count * currentBook.price;
+                }
+            },
+            filters: {
+                currency: function(price) {
+                    return "$ ".concat(price.toFixed(2));
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>
